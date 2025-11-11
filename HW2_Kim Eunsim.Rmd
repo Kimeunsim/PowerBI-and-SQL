@@ -1,0 +1,76 @@
+---
+title: "HW2_Kim Eunsim"
+output: pdf_document
+date: "2025-10-28"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+
+##Q1: Eyeball the soc3 data and remove any negative values 
+```{r}
+#loading the data 
+data=read.csv("/Users/eunsimkim/Desktop/UNINE/2025 fall/QQM/RestaurantSpending.csv",header=T, sep=",")
+head(data)
+
+```
+
+```{r}
+summary(data$soc3)
+
+```
+
+```{r}
+#remove negative values in soc3 
+data_clean=data[data$soc3>=0,]
+```
+
+##Q2. mean and medium 
+```{r}
+mean_soc3=mean(data_clean$soc3,na.rm=T)
+median_soc3=median(data_clean$soc3,na.rm=T)
+
+print(mean_soc3)
+print(median_soc3)
+```
+##Q3. 2.5% trimming data 
+```{r}
+lower_bound=quantile(data_clean$soc3,0.025, na.rm=T)
+upper_bound=quantile(data_clean$soc3,0.975, na.rm=T)
+#make a new column called soc3_trimmed for later usage 
+data_clean$soc3_trimmed=ifelse(data_clean$soc3>=lower_bound & data_clean$soc3<=upper_bound,data_clean$soc3,NA)
+```
+
+##Q4. mean and median for the trimmed data 
+
+```{r}
+mean_trimmed=mean(data_clean$soc3_trimmed, na.rm=TRUE)
+median_trimmed=median(data_clean$soc3_trimmed, na.rm=TRUE)
+
+print(mean_trimmed)
+print(median_trimmed)
+
+cat("Mean soc3 (after 2.5% trimming):", mean_trimmed,"\n" )
+cat("median soc3(after 2.5% trimming):", median_trimmed,"\n")
+```
+##Q5: central tendancy is improved from 98 to 87 to the median value 80. It is because the mean is highly influenced by the extreme value. 
+
+##Q6: correlation, soc3_trimmed, soc1_1, soc1_2, soc1_3,soc1_4, soc1_5 
+```{r}
+vars=c("soc3_trimmed","soc1_1", "soc1_2", "soc1_3", "soc1_4", "soc1_5")
+corr=data_clean[,vars]
+#remove all the negative values 
+corr=corr[apply(corr,1, function(x) all(x>=0 | is.na(x))),]
+#calculate Pearson correlation 
+cor_matrix=cor(corr,use="pairwise.complete.obs",method="pearson")
+print(round(cor_matrix,3))
+```
+#We can conclude to target the customers who more level of cultivation an upscale standard of life, less living with religious principles, more enjoy their life to the full, and go out much is highly likely spending the maximum in the restaurant. Also, it is less or no correlated with the soc1_3 variable, hold family's old tradition. Also, the soc3_trimmed is possitively correlated with soc1_1, soc1_4,soc1_5, and negative relationship with soc1_2 and soc1_3. 
+
+
