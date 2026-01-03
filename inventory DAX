@@ -1,0 +1,23 @@
+15.	inventory Value = 
+16.	SUMX(
+17.	    'inventory',
+18.	    'inventory'[Inventory Level]*
+19.	        IF (
+20.	            'inventory'[Discount]=0,
+21.	            'inventory'[Price], --if discount is 0,use normal price
+22.	            'inventory'[Price]*(1-'inventory'[Discount]/100) --Else apply discount
+23.	        )
+24.	)
+25.	Total Revenue=
+26.	SUMX(inventory,
+27.	    IF(
+28.	        inventory[Discount]=0,
+29.	        inventory[Units Sold]*inventory[Price],
+30.	        inventory[Units Sold]*(inventory[Price]*(1-inventory[Discount]/100))
+31.	    )
+32.	)
+33.	Average inventory = 
+34.	AVERAGEX(
+35.	    VALUES ('Date'[MonthYear]),
+36.	    CALCULATE(SUM(inventory[Inventory Level]))
+37.	)
