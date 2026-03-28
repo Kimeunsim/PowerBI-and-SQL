@@ -1,3 +1,10 @@
+🍽️ Restaurant Order Analysis Dashboard (Power BI)
+
+This project showcases a Power BI dashboard built from a dataset of size 28 × 1004, aimed at analyzing restaurant order trends across different states and restaurants. The dashboard provides insights into order volume, delivery efficiency, and customer behavior.
+
+<img width="579" height="331" alt="Image" src="https://github.com/user-attachments/assets/d6ce800b-1cf2-404f-bf42-d03ad61cc13a" />
+
+
 Financial Dashboard
 <img width="733" height="331" alt="Image" src="https://github.com/user-attachments/assets/ce40a7a5-bf97-4f4c-9e66-6b4c502a3c26" />
 
